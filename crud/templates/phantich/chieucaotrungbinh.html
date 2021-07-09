@@ -1,0 +1,74 @@
+{% extends 'crud/base.html' %} {% block body %}
+
+<div class="row">
+    <div class="col-md-2"></div>
+
+    <div class="col-md-8 well">
+        <h3 class="text-primary">Chiều cao trung bình</h3>
+        <hr style="border-top:1px dotted #000;" />
+
+        <br />
+        <input type="hidden" class="doituyen" value="{% for item in doituyen %} {{item}}, {%endfor%}">
+        <input type="hidden" class="chieucao " value="{{chieucao}}">
+
+
+        <div class="card ">
+            <div class="card-body ">
+                <canvas id="chBar " height="100 "></canvas>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-md-1 ">&nbsp;</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js "></script>
+<script>
+    /* chart.js chart examples */
+
+    // chart colors
+
+    doituyen = $('.doituyen').val();
+    chieucao = $('.chieucao').val();
+
+    doituyen = doituyen.substring(0, doituyen.length - 2);
+
+    // alert(doituyen);
+
+    var colors = ['#007bff', '#28a745', '#444444', '#c3e6cb', '#dc3545', '#6c757d'];
+
+    var chBar = document.getElementById("chBar ");
+    var chartData = {
+        labels: doituyen.split(', '),
+        datasets: [{
+            data: JSON.parse(chieucao),
+            backgroundColor: colors[0]
+        }]
+    };
+
+    if (chBar) {
+        new Chart(chBar, {
+            type: 'bar',
+            data: chartData,
+            options: {
+                scales: {
+                    xAxes: [{
+                        barPercentage: 0.4,
+                        categoryPercentage: 0.5
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                }
+            }
+        });
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'crud/base.html' %} {% block body %}
+<div class="col-md-3"></div>
+<div class="col-md-6 well">
+    <h3 class="text-primary">Cập nhật kết quả</h3>
+    <hr style="border-top:1px dotted #000;" />
+
+    <form class="form-inline" method="POST" action="/lich-thi-dau/update/{{ketqua.id}}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">{{ ketqua.doi1 }}</label>
+            <input type="number" name="kq1" class="form-control" value="{% if ketqua.kq1 == -1%}0{%else%}{{ketqua.kq1}}{%endif%}" min="0" step="1" required="required" />
+        </div>
+
+        <div class="form-group" style="margin-left: 10px;">
+            <label for="name">{{ ketqua.doi2 }}</label>
+            <input type="number" name="kq2" class="form-control" value="{% if ketqua.kq2 == -1%}0{%else%}{{ketqua.kq2}}{%endif%}" min="0" step="1" required="required" />
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-edit"></span> Update</button>
+        </div>
+    </form>
+    {% endblock %}
+</div>

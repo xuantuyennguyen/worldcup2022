@@ -1,0 +1,45 @@
+{% extends 'crud/base.html' %} {% block body %}
+<div class="col-md-3"></div>
+<div class="col-md-6 well">
+    <h3 class="text-primary">Bảng {{ bang|upper }}</h3>
+    <hr style="border-top:1px dotted #000;" />
+
+    <form class="form-inline" method="POST" action="/bang/create">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="hidden" name="bang" value="{{ bang }}" />
+            <label for="name">Tên</label>
+            <input type="text" name="name" class="form-control" required="required" />
+            <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> Thêm</button>
+        </div>
+    </form>
+    <br />
+    <table class="table table-bordered">
+        <thead class="alert-info">
+            <tr>
+                <th>Tên</th>
+                <th>Cập nhật</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for doituyen in doituyens %}
+            <tr>
+                <td>{{ doituyen.name }}</td>
+                <td>
+                    <a class="btn btn-sm btn-warning" href="/bang/edit/{{ doituyen.id }}">
+                        <span class="glyphicon glyphicon-edit"></span> Sửa
+                    </a>
+                    <a class="btn btn-sm btn-success" href="/cauthu/{{ doituyen.name }}">
+                        <span class="glyphicon glyphicon-edit"></span> Cầu thủ
+                    </a>
+                    <a class="btn btn-sm btn-danger" href="/bang/delete/{{ bang }}/{{ doituyen.id }}">
+                        <span class="glyphicon glyphicon-trash"></span> Xóa
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

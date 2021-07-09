@@ -1,0 +1,105 @@
+{% extends 'crud/base.html' %} {% block body %}
+<div class="col-md-3"></div>
+<div class="col-md-6 well">
+    <h3 class="text-primary">Cập nhật cầu thủ</h3>
+    <hr style="border-top:1px dotted #000;" />
+
+
+    <form class="cauthu_update" method="POST" action="/cauthu/update/{{doituyen}}/{{cauthu.id}}">
+        {% csrf_token %}
+        <input type="hidden" name="doituyen" value="{{ doituyen }}" />
+
+        <div class="form-group row">
+            <label for="ten" class="col-sm-2 col-form-label">Tên</label>
+            <div class="col-sm-10">
+                <input type="text" class="ten form-control" id="ten" name="ten" required="required" value="{{cauthu.ten}}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="vitri" class="col-sm-2 col-form-label">Vị trí</label>
+            <div class="col-sm-10">
+                <select class="vitri form-control" name="vitri">
+                        <option value="0">--Vị trí--</option>
+                        <option {% if cauthu.vitri == 'Thủ môn'%}selected{% endif %} value="Thủ môn">Thủ môn</option>
+                        <option {% if cauthu.vitri == 'Hậu vệ'%}selected{% endif %} value="Hậu vệ">Hậu vệ</option>
+                        <option {% if cauthu.vitri == 'Tiền vệ'%}selected{% endif %} value="Tiền vệ">Tiền vệ</option>
+                        <option {% if cauthu.vitri == 'Tiền đạo'%}selected{% endif %} value="Tiền đạo">Tiền đạo</option>
+                      </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="namsinh" class="col-sm-2 col-form-label">Năm sinh</label>
+            <div class="col-sm-10">
+                <input type="text" class="namsinh form-control" id="namsinh" name="namsinh" required="required" value={{cauthu.namsinh}}>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="chieucao" class="col-sm-2 col-form-label">Chiều cao (cm)</label>
+            <div class="col-sm-10">
+                <input type="text" class="chieucao form-control" id="chieucao" name="chieucao" required="required" value="{{cauthu.chieucao}}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="cannang" class="col-sm-2 col-form-label">Cân nặng (kg)</label>
+            <div class="col-sm-10">
+                <input type="text" class="cannang form-control" id="cannang" name="cannang" required="required" value="{{cauthu.cannang}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="cannang" class="col-sm-2 col-form-label"></label>
+            <button type="button" class="btn btn-sm btn-warning" onclick="cauthu_update()">
+                    <span class="glyphicon glyphicon-edit"></span> Cập nhật
+                </button>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    function cauthu_update() {
+        vitri = ($('form.cauthu_update .vitri').val());
+
+        if (vitri == 0) {
+            alert("vui lòng chọn vị trí");
+            return;
+        }
+
+        ten = ($('form.cauthu_update .ten').val());
+        namsinh = ($('form.cauthu_update .namsinh').val());
+        namsinhInt = parseInt(namsinh);
+
+        chieucao = ($('form.cauthu_update .chieucao').val());
+        chieucaoInt = parseInt(chieucao);
+
+        cannang = ($('form.cauthu_update .cannang').val());
+        cannangInt = parseInt(cannang);
+
+        if (ten == '' || namsinh == '' || chieucao == '' || cannang == '') {
+            alert("vui lòng nhập đầy đủ thông tin");
+            return;
+        }
+
+        if (namsinh != namsinhInt) {
+            alert("năm sinh phải là số nguyên");
+            return;
+        }
+
+        if (chieucao != chieucaoInt) {
+            alert("Chiều cao phải là số nguyên");
+            return;
+        }
+
+        if (cannang != cannangInt) {
+            alert("Cân nặng phải là số nguyên");
+            return;
+        }
+
+        $('form.cauthu_update').submit();
+    }
+</script>
+{% endblock %}

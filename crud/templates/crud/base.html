@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>World cup 2022</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" /> {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'crud/css/bootstrap.css' %}" />
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-default" style="background-color: #28a4c9">
+        <div class="container-fluid" style="display: flex; justify-content: center;">
+            <span class="navbar-brand">Chương trình bóng đá World cup 2022 </span>
+            <ul class="nav navbar-nav">
+                <li class="{% if active == 'a'%}active{% endif %}"><a href="/bang/a">Bảng A</a></li>
+                <li class="{% if active == 'b'%}active{% endif %}"><a href="/bang/b">Bảng B</a></li>
+                <li class="{% if active == 'lichthidau'%}active{% endif %}"><a href="/lich-thi-dau">Lịch thi đấu & kết quả</a></li>
+
+                <li class="nav-item dropdown {% if active == 'tuoitrungbinh' or active == 'chieucaotrungbinh'%}active{% endif %}">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Phân tích
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/phan-tich/tuoi-trung-binh">Tuổi trung bình</a>
+                        <a class="dropdown-item" href="/phan-tich/chieu-cao-trung-binh">Chiều cao trung bình</a>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+
+    {% block body %} {% endblock %}
+</body>
+
+</html>
+
+<style>
+    nav .navbar-brand {
+        color: lightblue !important;
+    }
+    
+    nav a {
+        color: white !important;
+    }
+    
+    nav a:hover {
+        background-color: #e7e7e7 !important;
+        color: #777 !important;
+    }
+    
+    nav .active a {
+        color: #777 !important;
+    }
+    
+    input[type="date"],
+    input[type="time"] {
+        line-height: unset !important;
+    }
+    
+    .nav-item.dropdown.open a {
+        color: #777 !important;
+    }
+    
+    .dropdown-item {
+        color: blue !important;
+        padding: 10px;
+        display: block;
+    }
+</style>

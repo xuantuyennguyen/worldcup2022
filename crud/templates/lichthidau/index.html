@@ -1,0 +1,199 @@
+{% extends 'crud/base.html' %} {% block body %}
+
+<div class="row">
+    <div class="col-md-2"></div>
+
+    <div class="col-md-8 well">
+        <h3 class="text-primary">Lịch thi đấu Bảng A</h3>
+        <hr style="border-top:1px dotted #000;" />
+
+        <form class="form-inline text-center" id="thidauA" method="POST" action="/lich-thi-dau/create">
+            {% csrf_token %}
+            <div class="form-group ">
+                <input type="hidden" class="bang" name="bang" value="a" />
+
+                <select class="doi1 form-control" id="doi1" name="doi1">
+                        <option value="0">--Chọn đội--</option>
+                        {% for doituyen in doituyenAs %}
+                        <option>{{ doituyen.name }}</option>
+                        {% endfor %}
+                    </select>
+                <span class="glyphicon glyphicon-plus"></span>
+
+                <select class="doi2 form-control" id="doi2" name="doi2">
+                        <option value="0">--Chọn đội--</option>
+                        {% for doituyen in doituyenAs %}
+                        <option>{{ doituyen.name }}</option>
+                        {% endfor %}
+                    </select>
+
+                <div style="margin-top: 10px;">
+                    <label for="ngay" style="margin-left: 10px;">Ngày giờ:</label>
+                    <input type="date" name="ngay" class="ngay form-control" required="required" />
+                    <input type="time" name="gio" class="gio form-control" required="required" />
+
+                    <label for="san" style="margin-left: 10px;">Sân:</label>
+                    <input type="text" name="san" class="san form-control" required="required" />
+                </div>
+
+                <div style="margin-top: 10px;">
+                    <button type="button" class="btn btn-sm btn-success" onclick="submitThidau('A')">
+                            <span class="glyphicon glyphicon-plus"></span> Thêm
+                        </button>
+                </div>
+            </div>
+        </form>
+
+        <br />
+        <table class="table table-bordered">
+            <thead class="alert-info">
+                <tr>
+                    <th>Ngày giờ</th>
+                    <th>Cặp thi đấu</th>
+                    <th>Sân</th>
+                    <th>Cập nhật</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for LichThiDau in LichThiDauAs %}
+                <tr>
+                    <td>{{ LichThiDau.gio }} - {{ LichThiDau.ngay }} </td>
+                    <td style="color: blue; font-weight: bold;" class="text-center">
+                        {{ LichThiDau.doi1 }} <span style="color: red; font-weight: normal;">vs</span> {{ LichThiDau.doi2 }}
+                        <br> {% if LichThiDau.kq1 > -1 and LichThiDau.kq2 > -1 %} {{ LichThiDau.kq1 }} <span style="color: red; font-weight: normal;"> -- </span> {{ LichThiDau.kq2 }} {% endif %}
+                    </td>
+                    <td>
+                        {{ LichThiDau.san }}
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-warning" href="/lich-thi-dau/edit/{{ LichThiDau.id }}">
+                            <span class="glyphicon glyphicon-edit"></span> Cập nhật kết quả
+                        </a>
+                        <a class="btn btn-sm btn-danger" href="/lich-thi-dau/delete/{{ LichThiDau.id }}">
+                            <span class="glyphicon glyphicon-trash"></span> Xóa
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-md-1">&nbsp;</div>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-md-2">&nbsp;</div>
+
+
+    <div class="col-md-8 well">
+        <h3 class="text-primary">Lịch thi đấu Bảng B</h3>
+        <hr style="border-top:1px dotted #000;" />
+
+
+
+        <form class="form-inline text-center" id="thidauB" method="POST" action="/lich-thi-dau/create">
+            {% csrf_token %}
+            <div class="form-group ">
+                <input type="hidden" class="bang" name="bang" value="b" />
+
+                <select class="doi1 form-control" id="doi1" name="doi1">
+                        <option value="0">--Chọn đội--</option>
+                        {% for doituyen in doituyenBs %}
+                        <option>{{ doituyen.name }}</option>
+                        {% endfor %}
+                    </select>
+                <span class="glyphicon glyphicon-plus"></span>
+
+                <select class="doi2 form-control" id="doi2" name="doi2">
+                        <option value="0">--Chọn đội--</option>
+                        {% for doituyen in doituyenBs %}
+                        <option>{{ doituyen.name }}</option>
+                        {% endfor %}
+                    </select>
+
+                <div style="margin-top: 10px;">
+                    <label for="ngay" style="margin-left: 10px;">Ngày giờ:</label>
+                    <input type="date" name="ngay" class="ngay form-control" required="required" />
+                    <input type="time" name="gio" class="gio form-control" required="required" />
+
+                    <label for="san" style="margin-left: 10px;">Sân:</label>
+                    <input type="text" name="san" class="san form-control" required="required" />
+                </div>
+
+                <div style="margin-top: 10px;">
+                    <button type="button" class="btn btn-sm btn-success" onclick="submitThidau('B')">
+                            <span class="glyphicon glyphicon-plus"></span> Thêm
+                        </button>
+                </div>
+            </div>
+        </form>
+
+        <br />
+        <table class="table table-bordered">
+            <thead class="alert-info">
+                <tr>
+                    <th>Ngày giờ</th>
+                    <th>Cặp thi đấu</th>
+                    <th>Sân</th>
+                    <th>Xóa</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for LichThiDau in LichThiDauBs %}
+                <tr>
+                    <td>{{ LichThiDau.gio }} - {{ LichThiDau.ngay }} </td>
+                    <td style="color: blue; font-weight: bold;" class="text-center">
+                        {{ LichThiDau.doi1 }} <span style="color: red; font-weight: normal;">vs</span> {{ LichThiDau.doi2 }}
+                        <br> {% if LichThiDau.kq1 > -1 and LichThiDau.kq2 > -1 %} {{ LichThiDau.kq1 }} <span style="color: red; font-weight: normal;"> -- </span> {{ LichThiDau.kq2 }} {% endif %}
+                    </td>
+                    <td>
+                        {{ LichThiDau.san }}
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-warning" href="/lich-thi-dau/edit/{{ LichThiDau.id }}">
+                            <span class="glyphicon glyphicon-edit"></span> Cập nhật kết quả
+                        </a>
+                        <a class="btn btn-sm btn-danger" href="/lich-thi-dau/delete/{{ LichThiDau.id }}">
+                            <span class="glyphicon glyphicon-trash"></span> Xóa
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<script>
+    function submitThidau(bang) {
+        doi1 = ($('form#thidau' + bang + ' .bang').val());
+        doi1 = ($('form#thidau' + bang + ' .doi1').val());
+        doi2 = ($('form#thidau' + bang + ' .doi2').val());
+        ngay = ($('form#thidau' + bang + ' .ngay').val());
+        gio = ($('form#thidau' + bang + ' .gio').val());
+        san = ($('form#thidau' + bang + ' .san').val());
+
+        if (doi1 == doi2 || doi1 == 0 || doi2 == 0) {
+            alert("vui lòng chọn lại đội");
+            return;
+        }
+
+        if (ngay == '' || gio == '' || san == '') {
+            alert("vui lòng nhập đầy đủ thông tin");
+            return;
+        }
+
+        $('form#thidau' + bang).submit();
+    }
+</script>
+
+{% endblock %}
